@@ -9,10 +9,9 @@
 ![Test](https://github.com/indrayyana/go-fiber-boilerplate/workflows/Test/badge.svg)
 ![Linter](https://github.com/indrayyana/go-fiber-boilerplate/workflows/Linter/badge.svg)
 
-A boilerplate/starter project for quickly building RESTful APIs using Go, Fiber, and PostgreSQL.\
-`Inspired by the Express boilerplate.`
+A boilerplate/starter project for quickly building RESTful APIs using Go, Fiber, and PostgreSQL. Inspired by the Express boilerplate.
 
-The app comes with many built-in features, such as authentication using JWT and Google OAuth2, request validation, integration tests, docker support, API documentation, pagination, etc. For more details, check the features list below.
+The app comes with many built-in features, such as authentication using JWT and Google OAuth2, request validation, unit and integration tests, docker support, API documentation, pagination, etc. For more details, check the features list below.
 
 ## Quick Start
 
@@ -66,11 +65,13 @@ cp .env.example .env
 ## Features
 
 - **SQL database**: [PostgreSQL](https://www.postgresql.org) Object Relation Mapping using [Gorm](https://gorm.io)
+- **Database migrations**: with [golang-migrate](https://github.com/golang-migrate/migrate)
 - **Validation**: request data validation using [Package validator](https://github.com/go-playground/validator)
 - **Logging**: using [Logrus](https://github.com/sirupsen/logrus) and [Fiber-Logger](https://docs.gofiber.io/api/middleware/logger)
-- **Testing**: integration tests using [Testify](https://github.com/stretchr/testify) and formatted test output using [gotestsum](https://github.com/gotestyourself/gotestsum)
+- **Testing**: unit and integration tests using [Testify](https://github.com/stretchr/testify) and formatted test output using [gotestsum](https://github.com/gotestyourself/gotestsum)
 - **Error handling**: centralized error handling mechanism
 - **API documentation**: with [Swag](https://github.com/swaggo/swag) and [Swagger](https://github.com/gofiber/swagger)
+- **Sending email**: using [Gomail](https://github.com/go-gomail/gomail)
 - **Environment variables**: using [Viper](https://github.com/spf13/viper)
 - **Security**: set security HTTP headers using [Fiber-Helmet](https://docs.gofiber.io/api/middleware/helmet)
 - **CORS**: Cross-Origin Resource-Sharing enabled using [Fiber-CORS](https://docs.gofiber.io/api/middleware/cors)
@@ -133,6 +134,30 @@ Swagger:
 make swagger
 ```
 
+Migration:
+
+```bash
+# Create migration
+make migration-<table-name>
+
+# Example for table users
+make migration-users
+```
+
+```bash
+# run migration up in local
+make migrate-up
+
+# run migration down in local
+make migrate-down
+
+# run migration up in docker container
+make migrate-docker-up
+
+# run migration down all in docker container
+make migrate-docker-down
+```
+
 ## Environment Variables
 
 The environment variables can be found and modified in the `.env` file. They come with these default values:
@@ -181,14 +206,14 @@ REDIRECT_URL=http://localhost:3000/v1/auth/google-callback
 ```
 src\
  |--config\         # Environment variables and configuration related things
- |--controllers\    # Route controllers (controller layer)
- |--database\       # Database connection & migration
+ |--controller\     # Route controllers (controller layer)
+ |--database\       # Database connection & migrations
  |--docs\           # Swagger files
  |--middleware\     # Custom fiber middlewares
  |--model\          # Postgres models (data layer)
  |--response\       # Response models
  |--router\         # Routes
- |--services\       # Business logic (service layer)
+ |--service\        # Business logic (service layer)
  |--utils\          # Utility classes and functions
  |--validation\     # Request data validation schemas
  |--main.go         # Fiber app
@@ -198,8 +223,8 @@ src\
 
 To view the list of available APIs and their specifications, run the server and go to `http://localhost:3000/v1/docs` in your browser.
 
-![Auth](https://github.com/user-attachments/assets/da2e05d8-5aba-4750-abda-0688ce0afe73)
-![User](https://github.com/user-attachments/assets/58ed8b23-5517-4bce-94bc-2dc5b2d7b875)
+![Auth](https://indrayyana.github.io/assets/images/swagger1.png)
+![User](https://indrayyana.github.io/assets/images/swagger2.png)
 
 This documentation page is automatically generated using the [Swag](https://github.com/swaggo/swag) definitions written as comments in the controller files.
 
@@ -382,3 +407,7 @@ If you find this boilerplate useful, consider giving it a star! ⭐
 ## License
 
 [MIT](LICENSE)
+
+## Contributors
+
+[![Contributors](https://contrib.rocks/image?c=0&repo=indrayyana/go-fiber-boilerplate)](https://github.com/indrayyana/go-fiber-boilerplate/graphs/contributors)
